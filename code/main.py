@@ -1,6 +1,6 @@
 from enum import Enum
 
-
+#ALU OPERATIONS
 class ALU_opcode(Enum):
     ADD = 1
     SUB = 2
@@ -11,6 +11,8 @@ class ALU():
         self.input_A = 0
         self.input_B = 0
         self.output = 0
+
+    # This will execute whatever operation called at the method
     def execute_instruction(self,in_a,in_b,op_code):
         self.input_A = in_a
         self.input_B = in_b
@@ -22,11 +24,14 @@ class ALU():
             # Subtract TWO INPUTS and output the difference
             self.subtract()
 
+    # Add operation
     def addition(self):
         self.output = self.input_A + self.input_B
 
+    # Subtract operation
     def subtract(self):
         self.output = self.input_A + self.input_B
+
 
 
 class proccessor():
