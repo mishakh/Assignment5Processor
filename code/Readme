@@ -1,1 +1,7 @@
 Proccessor Emulator
+TODO:
+
+-Processor Class
+-Instruction_decoder()
+-ALU Class
+-Registers
