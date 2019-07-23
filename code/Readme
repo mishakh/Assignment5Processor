@@ -1,7 +1,9 @@
 Proccessor Emulator
 TODO:
 
--Processor Class
--Instruction_decoder()
--ALU Class
--Registers
+-Register Value Read
+-ALU Operations
+-Memory Read/Write
+
+-Branch Operations
+
