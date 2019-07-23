@@ -6,7 +6,7 @@ import processor_c as arm
 f = open("assignment5.txt", 'r')
 instrucMem = f.readlines()
 PC=0
-Reg=[None]*32
+reg=arm.Registers()
 
 ####RUN TIME
 while(PC<len(instrucMem)):
@@ -15,6 +15,7 @@ while(PC<len(instrucMem)):
     inReg=arm.InstructionReg(instrucMem[PC])   #Instruction Fetch
     controlU=arm.Control()          
     controlU.insRead(inReg.opcode)  #Set control bit values
+    
     PC=NPC
 #    ExecCalc=arm.ALU(
     #Instruction Deconstruction Occurs in IR constructor function

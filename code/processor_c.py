@@ -4,7 +4,23 @@ from enum import Enum
 class ALU_opcode(Enum):
     ADD = 1
     SUB = 2
+class Registers:
+    X=[None]*32
+    readData1 = 0
+    readData2 = 0
 
+    def __init__(self):
+        self.X=[0]*32
+
+    def regWrite(self, wData, wReg):
+        self.X[wReg]=wData
+        
+    def readRegs(self, rReg1, rReg2):
+        self.readData1=self.X[rReg1]
+        self.readData2=self.X[rReg2]
+        print(self.readData1, self.readData2)
+
+        
 class Control:
     reg2Loc = None
     branch = None
@@ -94,11 +110,14 @@ class InstructionReg:
                 self.Rd=int(instruc[1])
                 self.addr=int(instruc[2])
             print(self.opcode, self.Rd, self.addr)
-class ALU():
-    def __init__(self,readReg1,readReg2,ALU_op):
-        self.input_A = 0
-        self.input_B = 0
+class ALU:
+    in1 = 0
+    in2 = 0
+    def __init__(self,in1,in2,ALU_op):
+        self.in1 = in1
+        self.in2 = 0
         self.output = 0
+
 
     # This will execute whatever operation called at the method
     def execute_instruction(self, in_a, in_b, op_code):
