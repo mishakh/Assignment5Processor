@@ -2,16 +2,21 @@
 class Registers:
     def __init__(self):
         self.X=[0]*32
+        self.dataMem=[0]*300
         readData1 = 0
         readData2 = 0
     def regWrite(self, wData, wReg):
         self.X[wReg]=wData
-        
+        self.regMem()
     def readRegs(self, rReg1, rReg2):
         self.readData1=self.X[rReg1]
         self.readData2=self.X[rReg2]
         print(self.readData1, self.readData2)
-
+    def regMem(self):
+        for i in self.X:    #put register values in dataMemory DO THIS WITH REGWRITE
+            addr=i*8
+            self.dataMem[addr]=self.X[i]
+        
         
 class Control:
 
@@ -97,26 +102,37 @@ class ALU:
     def __init__(self,in1,in2,ALU_op1,ALU_op2):
         self.in1 = in1
         self.in2 = in2
-        self.ALU_op=str(ALU_op1)+str(ALU_op2) 
+        self.ALU_op=str(ALU_op1)+str(ALU_op2)
+        self.ALU_c=0
         self.output = 0
         self.zero = 0
         
-
-    # This will execute whatever operation called at the method
-    def exec(self, op_code):
-    
-        if(op_code == '00'):
+    def ALUcontrol(self, ALUop, opcode):
+        if(ALUop == '00'):
             #LDUR AND STUR operations
-            self.add(in)
-        if (op_code == '01'):
+            self.ALU_c = 0 #add
+        if (ALUop == '01'):
             #CBZ
-            self.pass_b()
-        if (op_code == '10'):
-            self.
-    # Add operation
-    def addition(self):
-        self.output = self.input_A + self.input_B
-
-    # Subtract operation
-    def subtract(self):
-        self.output = self.input_A - self.input_B
+            self.ALU_c = 2 #pass b
+        
+        if (ALUop == '10'):
+            if((opcode=='ADD') or (opcode=='ADDI')):
+                self.ALU_c = 0 #add
+            elif((opcode=='SUB') or (opcode=='SUBI')):
+                self.ALU_c = 1 #sub
+            elif(opcode=='AND'):
+                self.ALU_c = 3 #AND
+            elif(opcode=='ORR'):
+                self.ALU_c = 4 #ORR
+            
+            
+    # This will execute whatever operation called at the method
+    def exec(self, control):
+        control=self.ALU_c
+        if(control==0):
+            self.output=self.in1+self.in2S
+        if(control==1):
+            self.output=self.in1-self.in2
+        if(control==2):
+            self.output=self.in1
+            
