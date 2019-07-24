@@ -15,8 +15,12 @@ while(PC<len(instrucMem)):
     inReg=arm.InstructionReg(instrucMem[PC])   #Instruction Fetch
     controlU=arm.Control()          
     controlU.insRead(inReg.opcode)  #Set control bit values
-    
+    reg.readRegs(inReg.Rn, inReg.Rm)
+    if(controlU.ALUSrc==1):
+        ALU=arm.ALU(reg.readData1, inReg.Imm, controlU.ALUop1, controlU.ALUop2)
+    elif(controlU.ALUSrc==0):
+        ALU=arm.ALU(reg.readData1, reg.readData2, controlU.ALUop1, controlU.ALUop2)        
     PC=NPC
-#    ExecCalc=arm.ALU(
-    #Instruction Deconstruction Occurs in IR constructor function
 
+    #Instruction Deconstruction Occurs in IR constructor function
+    

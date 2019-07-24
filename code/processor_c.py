@@ -11,7 +11,7 @@ class Registers:
     def readRegs(self, rReg1, rReg2):
         self.readData1=self.X[rReg1]
         self.readData2=self.X[rReg2]
-        print(self.readData1, self.readData2)
+ #       print(self.readData1, self.readData2)
     def regMem(self):
         for i in self.X:    #put register values in dataMemory DO THIS WITH REGWRITE
             addr=i*8
@@ -58,8 +58,8 @@ class Control:
             self.ALUSrc = 1
             if(opcode=='B'):
                 self.uncond = 1
-        print('                   ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
-              self.ALUSrc, self.regWrite, self.uncond)
+        print('                     ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
+             self.ALUSrc, self.regWrite, self.uncond,'\n')
             
 class InstructionReg:
     opcode=0
@@ -135,4 +135,5 @@ class ALU:
             self.output=self.in1-self.in2
         if(control==2):
             self.output=self.in1
+        print(self.output)
             
