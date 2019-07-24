@@ -5,3 +5,6 @@
 -[ ] Instruction_decoder()
 -[ ] ALU Class
 -[ ] Registers
+-[ ] ALU operations
+-[ ] branch operations
+-[ ] memory read/write

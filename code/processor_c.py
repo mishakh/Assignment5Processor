@@ -4,15 +4,82 @@ from enum import Enum
 class ALU_opcode(Enum):
     ADD = 1
     SUB = 2
+class Registers:
+    X=[None]*32
+    readData1 = 0
+    readData2 = 0
 
+    def __init__(self):
+        self.X=[0]*32
+
+    def regWrite(self, wData, wReg):
+        self.X[wReg]=wData
+        
+    def readRegs(self, rReg1, rReg2):
+        self.readData1=self.X[rReg1]
+        self.readData2=self.X[rReg2]
+        print(self.readData1, self.readData2)
+
+        
+class Control:
+    reg2Loc = None
+    branch = None
+    memRead = None
+    memToReg = None
+    ALUop1 = None
+    ALUop2 = None
+    memWrite = None
+    ALUSrc = None
+    regWrite = None
+    uncond = None
+    
+    def __init__(self):
+        self.reg2Loc = 0
+        self.branch = 0
+        self.memRead = 0
+        self.memToReg = 0
+        self.ALUop1 = 0
+        self.ALUop2 = 0
+        self.memWrite = 0
+        self.ALUSrc = 0
+        self.regWrite = 0
+        self.uncond = 0
+        
+
+    def insRead(self, opcode):
+        #reads opcode and sets control bit values
+        if(opcode==('ADD') or opcode==('SUB') or opcode==('AND') or opcode==('ORR')):
+            self.regWrite = 1
+            self.ALUop1 = 1
+        
+        elif(opcode==('LDUR') or opcode==('STUR')):
+            self.ALUSrc = 1
+            self.memToReg = 1
+            self.regWrite = 1
+            if opcode==('LDUR'):
+                self.memRead = 1
+            elif opcode==('STUR'):
+                self.memWrite = 1
+                
+        elif(opcode==('ADDI') or opcode==('SUBI')):
+            self.regWrite = 1
+            self.ALUop1 = 1
+            self.ALUSrc = 1
+
+        elif(opcode==('CBZ') or opcode==('B')):
+            self.branch = 1
+            self.ALUSrc = 1
+            if(opcode=='B'):
+                self.uncond = 1
+        print('                   ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
+              self.ALUSrc, self.regWrite, self.uncond)
+            
 class InstructionReg:
     opcode=0
-    Format=''
     Rd=0
     Rn=0
     Rm=0
     Imm=0
-    addr=0
     def __init__(self, instruc):
         instruc=instruc.replace(",","")     ##format instruction
         instruc=instruc.replace("#","")     ##for code to read
@@ -21,40 +88,39 @@ class InstructionReg:
         instruc=instruc.replace("[","")     ##
         instruc=instruc.replace("]","")     ##
         instruc=instruc.split()             #seperate instruction into addressable entities
-        self.opcode=instruc[0]
+        self.opcode=instruc[0]          
         if(self.opcode=='ADD' or self.opcode=='SUB' or self.opcode=='AND' or self.opcode=='ORR'):
-            self.Format='R'
             self.Rd=int(instruc[1])
-            self.Rn=int(instruc[2])
+            self.Rn=int(instruc[2])     # R-Format 
             self.Rm=int(instruc[3])
             print(self.opcode,self.Rd,self.Rn,self.Rm)
         elif (self.opcode=='LDUR' or self.opcode=='STUR'):
-            self.Format='D'
             self.Rd=int(instruc[1])
-            self.Rn=int(instruc[2])
-            self.addr= int(instruc[3])
-            print(self.opcode,self.Rd,self.Rn,self.addr)
+            self.Rn=int(instruc[2])     # D-Format
+            self.Imm= int(instruc[3])
+            print(self.opcode,self.Rd,self.Rn,self.Imm)
         elif(self.opcode=='ADDI' or self.opcode=='SUBI'):
-            self.Format='I'
             self.Rd=int(instruc[1])
-            self.Rn=int(instruc[2])
+            self.Rn=int(instruc[2])     # I-Format
             self.Imm=int(instruc[3])
             print(self.opcode,self.Rd,self.Rn,self.Imm)
         elif(self.opcode=='B' or self.opcode=='CBZ'):
-            self.Format='B'
             self.addr=int(instruc[1])
-            if(self.opcode=='CBZ'):
+            if(self.opcode=='CBZ'):     # B-Format 
                 self.Rd=int(instruc[1])
                 self.addr=int(instruc[2])
             print(self.opcode, self.Rd, self.addr)
-class ALU():
-    def __init__(self):
-        self.input_A = 0
-        self.input_B = 0
+class ALU:
+    in1 = 0
+    in2 = 0
+    def __init__(self,in1,in2,ALU_op):
+        self.in1 = in1
+        self.in2 = 0
         self.output = 0
 
+
     # This will execute whatever operation called at the method
-    def execute_instruction(self,in_a,in_b,op_code):
+    def execute_instruction(self, in_a, in_b, op_code):
         self.input_A = in_a
         self.input_B = in_b
 
@@ -72,18 +138,3 @@ class ALU():
     # Subtract operation
     def subtract(self):
         self.output = self.input_A - self.input_B
-
-
-
-class proccessor():
-    def __init__(self):
-        self.PC = 0
-        self.General_ALU = ALU()
-
-
-
-
-
-
-def decode_instruction():
-    pass
