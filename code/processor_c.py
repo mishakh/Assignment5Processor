@@ -1,17 +1,9 @@
-from enum import Enum
 
-#ALU OPERATIONS
-class ALU_opcode(Enum):
-    ADD = 1
-    SUB = 2
 class Registers:
-    X=[None]*32
-    readData1 = 0
-    readData2 = 0
-
     def __init__(self):
         self.X=[0]*32
-
+        readData1 = 0
+        readData2 = 0
     def regWrite(self, wData, wReg):
         self.X[wReg]=wData
         
@@ -22,17 +14,7 @@ class Registers:
 
         
 class Control:
-    reg2Loc = None
-    branch = None
-    memRead = None
-    memToReg = None
-    ALUop1 = None
-    ALUop2 = None
-    memWrite = None
-    ALUSrc = None
-    regWrite = None
-    uncond = None
-    
+
     def __init__(self):
         self.reg2Loc = 0
         self.branch = 0
@@ -81,7 +63,7 @@ class InstructionReg:
     Rm=0
     Imm=0
     def __init__(self, instruc):
-        instruc=instruc.replace(",","")     ##format instruction
+        instruc=instruc.replace(",","")     ##format instruction 
         instruc=instruc.replace("#","")     ##for code to read
         instruc=instruc.replace("XZR","0")  ##
         instruc=instruc.replace("X","")     ##
@@ -111,26 +93,26 @@ class InstructionReg:
                 self.addr=int(instruc[2])
             print(self.opcode, self.Rd, self.addr)
 class ALU:
-    in1 = 0
-    in2 = 0
-    def __init__(self,in1,in2,ALU_op):
-        self.in1 = in1
-        self.in2 = 0
-        self.output = 0
 
+    def __init__(self,in1,in2,ALU_op1,ALU_op2):
+        self.in1 = in1
+        self.in2 = in2
+        self.ALU_op=str(ALU_op1)+str(ALU_op2) 
+        self.output = 0
+        self.zero = 0
+        
 
     # This will execute whatever operation called at the method
-    def execute_instruction(self, in_a, in_b, op_code):
-        self.input_A = in_a
-        self.input_B = in_b
-
-        if( op_code == ALU_opcode.ADD):
-            # ADD TWO INPUTS and output  the sum
-            self.addition()
-        if (op_code == ALU_opcode.SUB):
-            # Subtract TWO INPUTS and output the difference
-            self.subtract()
-
+    def exec(self, op_code):
+    
+        if(op_code == '00'):
+            #LDUR AND STUR operations
+            self.add(in)
+        if (op_code == '01'):
+            #CBZ
+            self.pass_b()
+        if (op_code == '10'):
+            self.
     # Add operation
     def addition(self):
         self.output = self.input_A + self.input_B
