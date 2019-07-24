@@ -14,7 +14,7 @@ class InstructionReg:
     Imm=0
     addr=0
     def __init__(self, instruc):
-        instruc=instruc.replace(",","")     ##format instruction 
+        instruc=instruc.replace(",","")     ##format instruction
         instruc=instruc.replace("#","")     ##for code to read
         instruc=instruc.replace("XZR","0")  ##
         instruc=instruc.replace("X","")     ##

@@ -8,11 +8,11 @@ import processor_c as arm
 #import processor_Classes.py
 
 ##
-##      op | Rm | shamt | Rn | Rd	= MEM[PC]		R-format
-##	op | Imm | Rn | Rd 		= MEM[PC]		I-format
+##  op | Rm | shamt | Rn | Rd	= MEM[PC]		R-format
+##	op | Imm | Rn | Rd 		    = MEM[PC]		I-format
 ##	op | addr | op2 | Rn | Rt 	= MEM[PC]		D-format
-##	op | addr | Rt 			= MEM[PC]		CB-format
-##	op | addr 	    		= MEM[PC]		B-format
+##	op | addr | Rt 			    = MEM[PC]		CB-format
+##	op | addr 	    		    = MEM[PC]		B-format
 
 
 
@@ -22,7 +22,7 @@ f = open("assignment5.txt", 'r')
 instrucMem = f.readlines()
 PC=0
 Reg=[None]*32
-        
+
 ####RUN TIME
 while(PC<len(instrucMem)):
     instructFetch=arm.InstructionReg(instrucMem[PC])   #Instruction Fetch
