@@ -19,7 +19,9 @@ while(PC<len(instrucMem)):
     if(controlU.ALUSrc==1):
         ALU=arm.ALU(reg.readData1, inReg.Imm, controlU.ALUop1, controlU.ALUop2)
     elif(controlU.ALUSrc==0):
-        ALU=arm.ALU(reg.readData1, reg.readData2, controlU.ALUop1, controlU.ALUop2)        
+        ALU=arm.ALU(reg.readData1, reg.readData2, controlU.ALUop1, controlU.ALUop2)
+    ALU.exec(ALU.ALU_c)
+    reg.regWrite(ALU.output,inReg.Rd)
     PC=NPC
 
     #Instruction Deconstruction Occurs in IR constructor function

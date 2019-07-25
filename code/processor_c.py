@@ -7,7 +7,7 @@ class Registers:
         readData2 = 0
     def regWrite(self, wData, wReg):
         self.X[wReg]=wData
-        self.regMem()
+       # self.regMem()
     def readRegs(self, rReg1, rReg2):
         self.readData1=self.X[rReg1]
         self.readData2=self.X[rReg2]
@@ -130,7 +130,7 @@ class ALU:
     def exec(self, control):
         control=self.ALU_c
         if(control==0):
-            self.output=self.in1+self.in2S
+            self.output=self.in1+self.in2
         if(control==1):
             self.output=self.in1-self.in2
         if(control==2):
