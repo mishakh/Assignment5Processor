@@ -1,10 +1,9 @@
 # Processor Emulator
 
 ## TODO:
--[ ] Processor Class
--[ ] Instruction_decoder()
--[ ] ALU Class
--[ ] Registers
--[ ] ALU operations
--[ ] branch operations
--[ ] memory read/write
+-[DONE] Instruction_decoder()
+-[DONE] ALU Class
+-[DONE] Registers
+-[DONE] ALU operations
+-[NOT DONE] branch operations
+-[DONE(?)] memory read/write
