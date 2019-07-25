@@ -2,20 +2,16 @@
 class Registers:
     def __init__(self):
         self.X=[0]*32
-        self.dataMem=[0]*300
+        self.dataMem=[0]*32
         readData1 = 0
         readData2 = 0
-    def regWrite(self, wData, wReg):
+    def regWrite(self, wReg, wData):
         self.X[wReg]=wData
-       # self.regMem()
+
     def readRegs(self, rReg1, rReg2):
         self.readData1=self.X[rReg1]
         self.readData2=self.X[rReg2]
  #       print(self.readData1, self.readData2)
-    def regMem(self):
-        for i in self.X:    #put register values in dataMemory DO THIS WITH REGWRITE
-            addr=i*8
-            self.dataMem[addr]=self.X[i]
         
         
 class Control:
