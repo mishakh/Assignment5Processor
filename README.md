@@ -7,6 +7,7 @@
 - [x] Registers
 - [x] ALU operations
 - [x] uncondition branch 
-- [ ] conditional branch
+- [x] conditional branch
 - [x] memory read/write
+- [ ] format output statements
 - [ ] DONE
