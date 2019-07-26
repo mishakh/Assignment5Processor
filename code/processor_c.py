@@ -117,17 +117,10 @@ class ALU:
 		if (ALUop == '01'):
 			#B
 			if(opcode=='B'):
-<<<<<<< HEAD
-					self.ALU_c = 2 #pass b
-			#CBZ
-			elif(opcode=='CBZ'):
-					self.ALU_c = 3
-=======
 				self.ALU_c = 2 #pass b
 			#CBZ
 			elif(opcode=='CBZ'):
 				self.ALU_c = 3
->>>>>>> 1ed624b26eb8a7509220148846082333b44f9daa
 		if (ALUop == '10'):
 			if((opcode=='ADD') or (opcode=='ADDI')):
 				self.ALU_c = 0 #add
@@ -149,12 +142,5 @@ class ALU:
 		if(control==2):
 			self.output=self.in1
 		if(control==3):
-<<<<<<< HEAD
-			if(self.in1-self.in2==0):
-				ALU.zero=1
-				print('0?=',ALU.zero)
-		#print(self.output)
-=======
 			if(self.in1==0):
 				self.zero=1
->>>>>>> 1ed624b26eb8a7509220148846082333b44f9daa
