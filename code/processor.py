@@ -11,7 +11,7 @@ reg.dataMem[0]=10
 reg.dataMem[1]=13
 ####RUN TIME
 while(PC<len(instrucMem)):
-        print("PC:"+str(PC))
+        print("PC: "+str(PC))
         NPC=PC+1
 
         inReg=arm.InstructionReg(instrucMem[PC])   #Instruction Fetch
@@ -33,8 +33,6 @@ while(PC<len(instrucMem)):
         ALU.ALUcontrol(ALU.ALU_op,inReg.opcode)
         
         ALU.exec(ALU.ALU_c)
-        if(controlU.branch==1):
-                print(ALU.zero)
 
         if((controlU.memToReg==0) and (controlU.branch==0)):
                 reg.regWrite(inReg.Rd,ALU.output)
@@ -48,13 +46,15 @@ while(PC<len(instrucMem)):
         elif(controlU.branch==1):  #Check for branch opcode
                 if(controlU.uncond==1):  # B instruction
                         PC= PC+inReg.Imm  #PC <- PC+addr
+                        print('-----------------------\n')
                         continue
                 elif(ALU.zero==1):  #if R[Rd]==0
                         PC = PC+inReg.Imm  #PC <- PC+addr
+                        print('-----------------------\n')
                         continue
                 else:
                         PC=NPC
-                        print('-----------------------\n')
+        print('-----------------------\n')
                         
 
        

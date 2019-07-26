@@ -134,7 +134,7 @@ class ALU:
 	# This will execute whatever operation called at the method
 	def exec(self, control):
 		control=self.ALU_c
-		print('------------------',control, self.in1,self.in2)
+
 		if(control==0):
 			self.output=self.in1+self.in2
 		if(control==1):
@@ -144,5 +144,3 @@ class ALU:
 		if(control==3):
 			if(self.in1==0):
 				self.zero=1
-				print('0?=',self.zero)
-		#print(self.output)
