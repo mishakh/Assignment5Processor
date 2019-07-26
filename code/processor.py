@@ -31,8 +31,10 @@ while(PC<len(instrucMem)):
                 ALU=arm.ALU(reg.readData1, reg.readData2, controlU.ALUop1, controlU.ALUop2)
 
         ALU.ALUcontrol(ALU.ALU_op,inReg.opcode)
+        
         ALU.exec(ALU.ALU_c)
-
+        if(controlU.branch==1):
+                print(ALU.zero)
 
         if((controlU.memToReg==0) and (controlU.branch==0)):
                 reg.regWrite(inReg.Rd,ALU.output)
@@ -47,11 +49,12 @@ while(PC<len(instrucMem)):
                 if(controlU.uncond==1):  # B instruction
                         PC= PC+inReg.Imm  #PC <- PC+addr
                         continue
-                elif(controlU.uncond==0):  # CBZ instruction
-                        if(ALU.zero==1):  #if R[Rd]==0
-                                PC = PC+inReg.Imm  #PC <- PC+addr
-                        else:
-                                PC=NPC
-                                
+                elif(ALU.zero==1):  #if R[Rd]==0
+                        PC = PC+inReg.Imm  #PC <- PC+addr
+                        continue
+                else:
+                        PC=NPC
+                        print('-----------------------\n')
+                        
 
        

@@ -54,12 +54,11 @@ class Control:
 			self.ALUSrc = 1
 
 		elif(opcode==('CBZ') or opcode==('B')):
+			self.ALUop2 = 1
 			self.branch = 1
 			self.ALUSrc = 1
 			if(opcode=='B'):
 				self.uncond = 1
-##		print('                     ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
-##			 self.ALUSrc, self.regWrite, self.uncond,'\n')
 
 class InstructionReg:
 	opcode=0
@@ -117,11 +116,11 @@ class ALU:
 			self.ALU_c = 0 #add
 		if (ALUop == '01'):
 			#B
-                        if(opcode=='B'):
-                                self.ALU_c = 2 #pass b
-                        #CBZ
-                        elif(opcode=='CBZ'):
-                                self.ALU_c = 3
+			if(opcode=='B'):
+				self.ALU_c = 2 #pass b
+			#CBZ
+			elif(opcode=='CBZ'):
+				self.ALU_c = 3
 		if (ALUop == '10'):
 			if((opcode=='ADD') or (opcode=='ADDI')):
 				self.ALU_c = 0 #add
@@ -135,6 +134,7 @@ class ALU:
 	# This will execute whatever operation called at the method
 	def exec(self, control):
 		control=self.ALU_c
+		print('------------------',control, self.in1,self.in2)
 		if(control==0):
 			self.output=self.in1+self.in2
 		if(control==1):
@@ -142,7 +142,7 @@ class ALU:
 		if(control==2):
 			self.output=self.in1
 		if(control==3):
-                        if((self.in1-self.in2==0)):
-                                ALU.zero=1
-                                print('0?=',ALU.zero)
+			if(self.in1==0):
+				self.zero=1
+				print('0?=',self.zero)
 		#print(self.output)
