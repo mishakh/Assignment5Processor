@@ -9,5 +9,5 @@
 - [x] uncondition branch 
 - [x] conditional branch
 - [x] memory read/write
-- [ ] format output statements
-- [ ] DONE
+- [x] format output statements
+- [x] DONE
