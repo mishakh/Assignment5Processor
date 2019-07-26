@@ -6,6 +6,7 @@
 - [x] ALU Class
 - [x] Registers
 - [x] ALU operations
-- [x] branch operations
+- [x] uncondition branch 
+- [ ] conditional branch
 - [x] memory read/write
 - [ ] DONE
