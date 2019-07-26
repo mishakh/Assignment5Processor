@@ -7,6 +7,7 @@ class Registers:
 		readData2 = 0
 	def regWrite(self, wReg, wData):
 		self.X[wReg]=wData
+		print(wData,' in X',wReg)
 
 	def readRegs(self, rReg1, rReg2): # Read from 2 registers
 		self.readData1=self.X[rReg1]
@@ -57,8 +58,8 @@ class Control:
 			self.ALUSrc = 1
 			if(opcode=='B'):
 				self.uncond = 1
-		print('                     ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
-			 self.ALUSrc, self.regWrite, self.uncond,'\n')
+##		print('                     ',self.reg2Loc, self.branch, self.memRead, self.memToReg, self.ALUop1, self.ALUop2, self.memWrite,
+##			 self.ALUSrc, self.regWrite, self.uncond,'\n')
 
 class InstructionReg:
 	opcode=0
@@ -91,14 +92,14 @@ class InstructionReg:
 			self.Imm=int(instruc[3])
 			print(self.opcode,self.Rd,self.Rn,self.Imm)
 		elif(self.opcode=='B' or self.opcode=='CBZ'):
-			self.addr=int(instruc[1])
+			self.Imm=int(instruc[1])
 			if(self.opcode=='CBZ'):     # CBZ-Format
 				self.Rd=int(instruc[1])
-				self.addr=int(instruc[2])
-				print(self.opcode,self.Rd,self.addr)
-			else:
-				self.addr=int(instruc[1])
-				print(self.opcode,self.addr)
+				self.Imm=int(instruc[2])
+				print(self.opcode,self.Rd,self.Imm)
+			elif(self.opcode=='B'):
+				self.Imm=int(instruc[1])
+				print(self.opcode,self.Imm)
 
 class ALU:
 
@@ -115,17 +116,21 @@ class ALU:
 			#LDUR AND STUR operations
 			self.ALU_c = 0 #add
 		if (ALUop == '01'):
-			#CBZ
-			self.ALU_c = 2 #pass b
+			#B
+                        if(opcode=='B'):
+                                self.ALU_c = 2 #pass b
+                        #CBZ
+                        elif(opcode=='CBZ'):
+                                self.ALU_c = 3
 		if (ALUop == '10'):
 			if((opcode=='ADD') or (opcode=='ADDI')):
 				self.ALU_c = 0 #add
 			elif((opcode=='SUB') or (opcode=='SUBI')):
 				self.ALU_c = 1 #sub
 			elif(opcode=='AND'):
-				self.ALU_c = 3 #AND
+				self.ALU_c = 4 #AND
 			elif(opcode=='ORR'):
-				self.ALU_c = 4 #ORR
+				self.ALU_c = 5 #ORR
 
 	# This will execute whatever operation called at the method
 	def exec(self, control):
@@ -136,4 +141,8 @@ class ALU:
 			self.output=self.in1-self.in2
 		if(control==2):
 			self.output=self.in1
+		if(control==3):
+                        if((self.in1-self.in2==0)):
+                                ALU.zero=1
+                                print('0?=',ALU.zero)
 		#print(self.output)
